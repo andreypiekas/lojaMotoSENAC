@@ -1,0 +1,82 @@
+CREATE TABLE financeiro (
+  idfinanceiro INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  cliente INTEGER(11) UNSIGNED NULL,
+  formapagamento VARCHAR(255) NULL,
+  prazopagamento INTEGER(20) UNSIGNED NULL,
+  PRIMARY KEY(idfinanceiro)
+);
+
+CREATE TABLE funcionario (
+  idfuncionario INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  cpf INTEGER(11) UNSIGNED NULL,
+  nome VARCHAR(255) NULL,
+  endereceo VARCHAR(255) NULL,
+  numero INTEGER(10) UNSIGNED NULL,
+  bairro VARCHAR(255) NULL,
+  cep VARCHAR(255) NULL,
+  cidade VARCHAR(255) NULL,
+  senha VARCHAR(255) NULL,
+  email VARCHAR(255) NULL,
+  PRIMARY KEY(idfuncionario)
+);
+
+CREATE TABLE cliente (
+  idcliente INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  funcionario_idfuncionario INTEGER(11) UNSIGNED NOT NULL,
+  cadastrounico INTEGER(20) UNSIGNED NULL,
+  nomeRazao VARCHAR(255) NULL,
+  endereco VARCHAR(255) NULL,
+  numero INTEGER(10) UNSIGNED NULL,
+  bairro VARCHAR(255) NULL,
+  cep VARCHAR(255) NULL,
+  cidade VARCHAR(255) NULL,
+  datanascimento DATE NULL,
+  email VARCHAR(255) NULL,
+  PRIMARY KEY(idcliente),
+  INDEX cliente_FKIndex1(funcionario_idfuncionario)
+);
+
+CREATE TABLE contato (
+  idcontato INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  cliente_idcliente INTEGER UNSIGNED NOT NULL,
+  funcionario_idfuncionario INTEGER(11) UNSIGNED NOT NULL,
+  cliente INTEGER(11) UNSIGNED NULL,
+  contato VARCHAR(11) NULL,
+  PRIMARY KEY(idcontato),
+  INDEX contato_FKIndex1(funcionario_idfuncionario),
+  INDEX contato_FKIndex2(cliente_idcliente)
+);
+
+CREATE TABLE venda (
+  idvenda INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  cliente_idcliente INTEGER UNSIGNED NOT NULL,
+  emissao DATE NULL,
+  saida DATE NULL,
+  cliente INTEGER(11) UNSIGNED NULL,
+  vendedor INTEGER(11) UNSIGNED NULL,
+  PRIMARY KEY(idvenda),
+  INDEX venda_FKIndex1(cliente_idcliente)
+);
+
+CREATE TABLE venda_has_financeiro (
+  venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
+  financeiro_idfinanceiro INTEGER(11) UNSIGNED NOT NULL,
+  PRIMARY KEY(venda_idvenda, financeiro_idfinanceiro),
+  INDEX venda_has_financeiro_FKIndex1(venda_idvenda),
+  INDEX venda_has_financeiro_FKIndex2(financeiro_idfinanceiro)
+);
+
+CREATE TABLE veiculos (
+  idveiculo INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
+  marca VARCHAR(255) NULL,
+  modelo VARCHAR(255) NULL,
+  ano INTEGER(4) UNSIGNED NULL,
+  chassi VARCHAR(17) NULL,
+  estado VARCHAR(255) NULL,
+  km DOUBLE(100) NULL,
+  sinistro TINYINT(1) UNSIGNED NULL,
+  PRIMARY KEY(idveiculo),
+  INDEX veiculos_FKIndex1(venda_idvenda)
+);
+

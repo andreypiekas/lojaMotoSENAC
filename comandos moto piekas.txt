@@ -1,11 +1,3 @@
-CREATE TABLE financeiro (
-  idfinanceiro INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  cliente INTEGER(11) UNSIGNED NULL,
-  formapagamento VARCHAR(255) NULL,
-  prazopagamento INTEGER(20) UNSIGNED NULL,
-  PRIMARY KEY(idfinanceiro)
-);
-
 CREATE TABLE funcionario (
   idfuncionario INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   cpf INTEGER(11) UNSIGNED NULL,
@@ -58,12 +50,14 @@ CREATE TABLE venda (
   INDEX venda_FKIndex1(cliente_idcliente)
 );
 
-CREATE TABLE venda_has_financeiro (
+CREATE TABLE financeiro (
+  idfinanceiro INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
-  financeiro_idfinanceiro INTEGER(11) UNSIGNED NOT NULL,
-  PRIMARY KEY(venda_idvenda, financeiro_idfinanceiro),
-  INDEX venda_has_financeiro_FKIndex1(venda_idvenda),
-  INDEX venda_has_financeiro_FKIndex2(financeiro_idfinanceiro)
+  cliente INTEGER(11) UNSIGNED NULL,
+  formapagamento VARCHAR(255) NULL,
+  prazopagamento INTEGER(20) UNSIGNED NULL,
+  PRIMARY KEY(idfinanceiro),
+  INDEX financeiro_FKIndex1(venda_idvenda)
 );
 
 CREATE TABLE veiculos (
@@ -74,9 +68,37 @@ CREATE TABLE veiculos (
   ano INTEGER(4) UNSIGNED NULL,
   chassi VARCHAR(17) NULL,
   estado VARCHAR(255) NULL,
-  km DOUBLE(100) NULL,
-  sinistro TINYINT(1) UNSIGNED NULL,
+  km VARCHAR(255),
   PRIMARY KEY(idveiculo),
   INDEX veiculos_FKIndex1(venda_idvenda)
 );
+
+
+
+
+
+
+//// inserção de dados
+
+--- funcionario 
+
+
+insert into funcionario values ("", "29120461062", "Joaquim Gustavo Benício Rocha", "Avenida Alberto Giovannini", 311, "Bethânia", "35164973", "Ipatinga", "eHI6QY7uwc", "joaquimgustavobeniciorocha"), ("", "02731054000", "Vanessa Elisa Pinto", "Beco Walfrido Navarro Lins",657 ,"Laranjeiras", "89167466", "Rio do Sul", "WdHdFtZgnI", "vanessaelisapinto_@agreonoma.eng.br"), ("", "70839693028", "Emanuelly Rita Hadassa Monteiro", "Avenida Rio Madeira", 315,"Nova Esperança", "76822330", "Porto Velho", "ZubFlIKFzu", "emanuellyritahadassamonteiro"), ("", "89305702082", "Kauê Raimundo Aparício", "Rua JP 3", 486,"Residencial João Paulo II", "74684025", "Goiânia", "MXJwSuzAIX", "kaueraimundoaparicio@saae.sp.gov.br"), ("", "15376594050", "Isabelly Luana Bruna Assunção", "Rua Castanheira", 472,"Santo Antônio", "76967320", "Cacoal", "lso5iwnb1S", "isabellyluanabrunaassuncao_@tahoo.com.br");
+
+
+
+--- cliente
+
+insert into cliente values ("", 3, "37022231184
+", "Mirella Priscila Silveira", "Rua das Figueiras", 307, "Jardim São Francisco", "65076150", "São Luís", "1996-05-03", "mmirellapriscilasilveira@seal.com.br"), ("", 5, "66439342495", "Guilherme Leonardo da Mota", "2ª Travessa F",412, "Jacintinho", "57040564", "Maceió", "1965-10-25", "guilhermeleonardodamota@inductothermgroup.com.br"), ("", 1, "14415759602", "João Martin Gabriel Santos", "Beco João-de-barro", 441, "Nova Palestina", "29032419", "Vitória", "1980-11-26", "jjoaomartingabrielsantos@tintasvalecores.com.br"), ("", 2, "61502548031", "Gabrielly Olivia Natália da Conceição", "Rua Projetada", 957, "Loteamento Joafra", "69919376", "Rio Branco", "1990-01-09", "gabriellyolivianataliadaconceicao-70@pmm.am.gov.br"), ("", 1, "26444235626", "Malu Giovanna Benedita Silveira", "Rua Lacerdópolis", 605, "Nova América", "29111875", "Vila Velha", "1978-12-18", "malugiovannabeneditasilveira-97@escolajardim.com.br");
+
+--- contatos cliente
+
+insert into contato values ("", 1, "", "2729172152"), ("", 2, "", "9325975592"), ("", 3, "", "9625755039"), ("", 4, "", "8336231816"), ("", 5, "", "4326267662");
+
+--- contatos funcionarios
+
+insert into contato values ("", "", 1, "1137760251"), ("", "", 2, "8438033333"), ("", "", 3, "1925287217"), ("", "", 4, "1138360773"), ("", "", 5, "71992480856");
+
+
 

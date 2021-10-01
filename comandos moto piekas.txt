@@ -66,7 +66,7 @@ CREATE TABLE veiculos (
   marca VARCHAR(255) NULL,
   modelo VARCHAR(255) NULL,
   ano INTEGER(4) UNSIGNED NULL,
-  chassi VARCHAR(17) NULL,
+  placa VARCHAR(17) NULL,
   estado VARCHAR(255) NULL,
   km VARCHAR(255),
   PRIMARY KEY(idveiculo),
@@ -102,3 +102,37 @@ insert into contato values ("", "", 1, "1137760251"), ("", "", 2, "8438033333"),
 
 
 
+
+--- veiculos
+
+
+insert into veiculos values( "" , "" , "VW - VolksWagen" , "Passat Variant 2.0" , 1991 , "KJH0921" , "Novo" , "0" ),( "" , "" , "LIFAN" , "620 TALENT 1.6 16V 106cv 4p" , 2009 , "KBI0403" , "Usado" ,"5454" ),( "" , "" , "MINI" , "COOPER John Works 1.6 Aut." , 2013 , "NAX0407" , "Novo", "20" ),( "" , "" , "CHERY" , "S-18 1.3 16V Flex Mec. 5p" , 2010 , "NCW9305" , "Usado" ,"82205" ),( "" , "" , "GM - Chevrolet" , "S10 Pick-Up LT 2.8 TDI 4x4 CD Diesel Aut" , 2013 , "LNG8529" , "Novo", "10" ),( "", "" , "Daihatsu" , "Cuore TS/TSL" , 1995 , "MAE7280" , "Usado" ,"85487" ),( "" , "" , "Saab" , "9000 CD 2.3 Turbo" , 1992 , "HON0775" , "Usado" ,"8246202652" ),
+( "" , "" , "Daewoo" , "Nubira SW CDX 2.0 16V Mec." , 1998 , "NAR6413" , "Usado" ,"5551" ),( "" , "" , "RAM" , "2500 LARAMIE SLT 6.7 TDI CD 4x4 Diesel" , 2012 , "CDZ3173" , "Novo" ,"40" ) ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// consultas 
+
+--- contatos dos funcionarios
+
+select funcionario.nome nome, funcionario.cidade cidade, contato.contato contato from funcionario as funcionario join contato as contato on funcionario.idfuncionario = contato.idcontato;
+
+
+--- contatos dos clientes
+
+select cliente.nomeRazao nome, cliente.cadastrounico cpf, contato.contato Telefone from cliente as cliente inner join contato as contato on cliente.idcliente = contato.cliente_idcliente;

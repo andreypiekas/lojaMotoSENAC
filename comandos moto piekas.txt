@@ -28,6 +28,23 @@ CREATE TABLE cliente (
   INDEX cliente_FKIndex1(funcionario_idfuncionario)
 );
 
+CREATE TABLE venda (
+  idvenda INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  funcionario_idfuncionario INTEGER(11) UNSIGNED NOT NULL,
+  cliente_idcliente INTEGER UNSIGNED NOT NULL,
+  emissao DATE NULL,
+  saida DATE NULL,
+  cliente INTEGER(11) UNSIGNED NULL,
+  vendedor INTEGER(11) UNSIGNED NULL,
+  valor double(11,3),
+  formapagamento integer(11),
+  foreign key (formapagamento) references formapagamento(idformapagamento),
+  PRIMARY KEY(idvenda),
+  INDEX venda_FKIndex1(cliente_idcliente),
+  INDEX venda_FKIndex2(funcionario_idfuncionario)
+);
+
+
 CREATE TABLE contato (
   idcontato INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   cliente_idcliente INTEGER UNSIGNED NOT NULL,
@@ -39,39 +56,36 @@ CREATE TABLE contato (
   INDEX contato_FKIndex2(cliente_idcliente)
 );
 
-CREATE TABLE venda (
-  idvenda INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  cliente_idcliente INTEGER UNSIGNED NOT NULL,
-  emissao DATE NULL,
-  saida DATE NULL,
-  cliente INTEGER(11) UNSIGNED NULL,
-  vendedor INTEGER(11) UNSIGNED NULL,
-  PRIMARY KEY(idvenda),
-  INDEX venda_FKIndex1(cliente_idcliente)
-);
-
-CREATE TABLE financeiro (
-  idfinanceiro INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
-  cliente INTEGER(11) UNSIGNED NULL,
-  formapagamento VARCHAR(255) NULL,
-  prazopagamento INTEGER(20) UNSIGNED NULL,
-  PRIMARY KEY(idfinanceiro),
-  INDEX financeiro_FKIndex1(venda_idvenda)
-);
-
 CREATE TABLE veiculos (
   idveiculo INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
   marca VARCHAR(255) NULL,
   modelo VARCHAR(255) NULL,
   ano INTEGER(4) UNSIGNED NULL,
-  placa VARCHAR(17) NULL,
+  chassi VARCHAR(17) NULL,
   estado VARCHAR(255) NULL,
-  km VARCHAR(255),
+  km VARCHAR(255) NULL,
   PRIMARY KEY(idveiculo),
   INDEX veiculos_FKIndex1(venda_idvenda)
 );
+
+CREATE TABLE financeiro (
+  idfinanceiro INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  venda_idvenda INTEGER(11) UNSIGNED NOT NULL,
+  cliente INTEGER(11) UNSIGNED NULL,
+  formapagamento integer(11),
+  prazopagamento INTEGER(20) UNSIGNED NULL,
+  foreign key (formapagamento) references formapagamento(idformapagamento),
+  PRIMARY KEY(idfinanceiro),
+  INDEX financeiro_FKIndex1(venda_idvenda)
+);
+
+CRETE TABLE formapagamento(
+  idformapagamento integer(11),
+  nomeformapagamento varchar(20),
+  primary key (idformapagamento)
+);
+
 
 
 
@@ -113,26 +127,39 @@ insert into veiculos values( "" , "" , "VW - VolksWagen" , "Passat Variant 2.0" 
 
 
 
+--- venda
+
+
+insert into venda values("", 1, "2021-01-20", "2021-01-21", 1, "22.000", 1),("", 2, "2021-01-10", "2021-01-11", 2, "232.000", 2), ("", 3, "2021-01-20", "2021-01-21", 3, "55.000", 1), ("", 4, "2021-01-20", "2021-01-21", 4, "25.000", 2), ("", 5, "2021-01-12", "2021-01-13", 1, "220.000", 2);
 
 
 
 
+--- financeiro (idfinanceiro, venda_idvenda, cliente, formapagamento, prazopagamento)
+
+insert into financeiro values ("", 1, 1, 1, 30), ("", 2, 2, 2, 10), ("", 3, 3, 1, 10), ("", 4,4,2,40), ("", 5,5,2,40);
 
 
 
-
-
+--- Formapagamento
+ insert into formapagamento values ("1", "Dinheiro"), ("2", "Boleto"), ("3", "Financiamento"), ("4", "Cheque"), ("5", "DiretoLoja");
 
 
 
 
 //// consultas 
 
---- contatos dos funcionarios
+--- Contatos dos funcionarios
 
-select funcionario.nome nome, funcionario.cidade cidade, contato.contato contato from funcionario as funcionario join contato as contato on funcionario.idfuncionario = contato.idcontato;
+select funcionario.nome nome, contato.contato contato from funcionario as funcionario join contato as contato on funcionario.idfuncionario = contato.idcontato;
 
 
---- contatos dos clientes
+--- Contatos dos clientes
 
-select cliente.nomeRazao nome, cliente.cadastrounico cpf, contato.contato Telefone from cliente as cliente inner join contato as contato on cliente.idcliente = contato.cliente_idcliente;
+select cliente.nomeRazao nome, contato.contato Telefone from cliente as cliente inner join contato as contato on cliente.idcliente = contato.cliente_idcliente;
+
+--- Venda + Veiculo + Valor
+
+select cliente.NomeRazao as Nome, veiculos.modelo as Modelo, venda.valor as Valor  from cliente 
+inner join venda on venda.cliente_idcliente = cliente.idcliente
+inner join veiculos on veiculos.idveiculo = venda.produto;

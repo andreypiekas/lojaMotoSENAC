@@ -7,6 +7,7 @@ Solicitação:
 
 
 UC: Implementar banco de dados.
+
 Situação de aprendizagem é um projeto que envolve toda a implementação de banco de
 dados desde o levantamento de requisitos, modelagem conceitual, lógico e físico.
 Contextualização:

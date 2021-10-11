@@ -147,19 +147,98 @@ insert into financeiro values ("", 1, 1, 1, 30), ("", 2, 2, 2, 10), ("", 3, 3, 1
 
 
 
-//// consultas 
+//// Consultas 
 
---- Contatos dos funcionarios
+
+Funcionarios
 
 select funcionario.nome nome, contato.contato contato from funcionario as funcionario join contato as contato on funcionario.idfuncionario = contato.idcontato;
 
+select from funcionario where email like '%gmail%;
 
---- Contatos dos clientes
+select nome from funcionario where idfuncionario = 1;
+
+select * from funcionario where nome like 'Joaquim%';
+
+select * from funcionario where cidade in ('Cacoal', 'Ipatinga');
+
+
+Clientes
+
+select funcionario.nome as Vendedor, cliente.nomeRazao as Cliente from funcionario as funcionario inner join cliente as cliente on funcionario.idfuncionario = cliente.funcionario_idfuncionario;
+
 
 select cliente.nomeRazao nome, contato.contato Telefone from cliente as cliente inner join contato as contato on cliente.idcliente = contato.cliente_idcliente;
 
---- Venda + Veiculo + Valor
+select * from cliente where cidade in ('Rio Branco', 'Maceio');
+
+select nomeRazao, datanascimento from cliente where datanascimento between '1965-00-00' and '1990-00-00';
+
+Select * from cliente where cadastrounico = '66439342495';
+
+
+
+Veiculos:
+
+select * from veiculos where estado = 'Novo';
+
+select idveiculo, marca, modelo, ano, placa, estado, km from veiculos where ano between 1991 and 2000;
+
+select * from veiculos order by ano asc ;
+
+select idveiculo, marca, modelo, ano, estado, km from veiculos where placa = 'NAR6413';
+
+
+Vendas:
 
 select cliente.NomeRazao as Nome, veiculos.modelo as Modelo, venda.valor as Valor  from cliente 
 inner join venda on venda.cliente_idcliente = cliente.idcliente
 inner join veiculos on veiculos.idveiculo = venda.produto;
+
+
+select cliente.NomeRazao as Nome, veiculos.modelo as Modelo, venda.valor as Valor  from cliente 
+inner join venda on venda.cliente_idcliente = cliente.idcliente
+inner join veiculos on veiculos.idveiculo = venda.produto and cliente.idcliente = 1;
+
+
+select sum(valor) from venda;
+
+select sum(valor) from venda where emissao = '2021-01-12';
+
+ select avg(valor) from venda;
+
+
+Alterações em Tabelas:
+
+
+Contato: 
+
+
+update contato set contato.contato = '2729172151' where idcontato = 3;
+
+update contato set contato.contato = null where idcontato = 3;
+
+
+Cliente:
+
+update cliente set cliente.nomeRazao = 'Mirella Silveira' where cliente.idcliente = 1;
+
+
+Exclusão em tabelas:
+
+
+delete from cliente where idcliente = 5;
+
+delete from venda where cliente_idcliente = 5;
+
+delete from contato where cliente_idcliente = 5;
+
+
+
+
+
+
+
+
+
+

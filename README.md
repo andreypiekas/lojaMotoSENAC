@@ -3,7 +3,7 @@
 
 Atividade curricular do curso de Jovem Aprendiz - Programador ERP - SENAC - 2021
 
-Seguinte requisitos solicitados:
+Solicitação:
 
 
 UC: Implementar banco de dados.
